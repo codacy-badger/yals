@@ -36,4 +36,5 @@ public class Endpoint {
     @RequestMethod(HttpMethod.GET)
     public static final String AUTH_PAGE = "/auth";
     public static final String LOGIN_FORM = "/auth/login";
+    public static final String LOGIN_FORM_V = "/auth/login1"; //TODO remove after test
 }
