@@ -1,5 +1,6 @@
 package ee.yals.ui;
 
+import com.vaadin.annotations.StyleSheet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.VaadinRequest;
@@ -14,17 +15,47 @@ import ee.yals.Endpoint;
  */
 
 @Title("Login to MyYals")
-@Theme("valo")
+@Theme("yals")
 @SpringUI(path = Endpoint.LOGIN_FORM_V)
+@StyleSheet("vaadin://loginPage.css")
 public class LoginPageUI extends UI {
+
+    private final GridLayout mainGrid = new GridLayout(3, 3);
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        VerticalLayout content = new VerticalLayout();
-        setContent(content);
 
-        content.addComponent(new Label("Terve"));
+        mainGrid.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        mainGrid.setSizeFull();
 
-        content.addComponent(new Button("Push Me", clickEvent -> Notification.show("Pushed!")));
+        for (int col = 1; col <= mainGrid.getColumns(); col++) {
+            mainGrid.addComponent(new Label());
+        }
+
+        mainGrid.addComponent(new Label());
+        mainGrid.addComponent(form());
+        mainGrid.addComponent(new Label());
+
+        for (int col = 1; col <= mainGrid.getColumns(); col++) {
+            mainGrid.addComponent(new Label());
+        }
+
+        setContent(mainGrid);
+    }
+
+    private Component form() {
+        VerticalLayout formLayout = new VerticalLayout();
+
+        Label formTitle = new Label("Please log in");
+        Label formSubTitle = new Label("to continue to My Yals");
+
+        //input box user
+        //input box password
+
+        Label demoString = new Label("For demo access use: demo/demo");
+        Button loginButton = new Button("Log in");
+
+        formLayout.addComponentsAndExpand(formTitle, formSubTitle, demoString, loginButton);
+        return formLayout;
     }
 }
