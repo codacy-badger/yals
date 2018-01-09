@@ -3,9 +3,11 @@ package ee.yals.ui;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import ee.yals.Endpoint;
 
 /**
@@ -15,7 +17,7 @@ import ee.yals.Endpoint;
  */
 
 @Title("Login to MyYals")
-@Theme("yals")
+@Theme("valo")
 @SpringUI(path = Endpoint.LOGIN_FORM_V)
 @StyleSheet("vaadin://loginPage.css")
 public class LoginPageUI extends UI {
@@ -33,7 +35,9 @@ public class LoginPageUI extends UI {
         }
 
         mainGrid.addComponent(new Label());
-        mainGrid.addComponent(form());
+        Component form = form();
+        mainGrid.addComponent(form);
+        mainGrid.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
         mainGrid.addComponent(new Label());
 
         for (int col = 1; col <= mainGrid.getColumns(); col++) {
@@ -44,18 +48,33 @@ public class LoginPageUI extends UI {
     }
 
     private Component form() {
-        VerticalLayout formLayout = new VerticalLayout();
+        FormLayout formLayout = new FormLayout();
 
         Label formTitle = new Label("Please log in");
         Label formSubTitle = new Label("to continue to My Yals");
 
         //input box user
+        TextField userField = new TextField("Name");
+        userField.setIcon(VaadinIcons.USER);
+
         //input box password
+        PasswordField passwordField = new PasswordField("Password");
+        passwordField.setIcon(VaadinIcons.KEY);
 
         Label demoString = new Label("For demo access use: demo/demo");
-        Button loginButton = new Button("Log in");
 
-        formLayout.addComponentsAndExpand(formTitle, formSubTitle, demoString, loginButton);
+        HorizontalLayout buttons = new HorizontalLayout();
+        buttons.setSizeFull();
+
+        Button loginButton = new Button("Log in");
+        loginButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+
+        buttons.addComponent(loginButton);
+
+        formLayout.addComponents(formTitle, formSubTitle, userField, passwordField, demoString, buttons);
+
+        // setSizeUndefined();
+
         return formLayout;
     }
 }
